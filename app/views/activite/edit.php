@@ -1,5 +1,19 @@
+<?php
+/**
+ * Vue activite/edit.php — Formulaire de modification d'une activité
+ *
+ * Affiche un formulaire pré-rempli avec les données de l'activité à modifier.
+ * Accessible uniquement à l'organisateur (admin).
+ *
+ * Variables attendues (fournies par ActiviteController::edit()) :
+ *   $activite (Activite) — L'entité à modifier, chargée depuis la base de données
+ *
+ * Soumission : POST vers index.php?c=activite&a=edit&id={id}
+ */
+?>
 <h2>Modifier une activité</h2>
 
+<!-- L'ID de l'activité est passé dans l'URL pour que le contrôleur sache quelle entité mettre à jour -->
 <form action="index.php?c=activite&a=edit&id=<?= $activite->getId() ?>" method="POST">
     <label for="nom">Nom :</label>
     <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($activite->getNom()) ?>" required>

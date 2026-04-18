@@ -1,169 +1,111 @@
 <?php
 /**
- * Classe représentant une activité
- * Mappée sur la table 'Activite' de la base de données
+ * Entité Activite
+ *
+ * Représente une activité proposée lors du congrès.
+ * Mappée sur la table 'activite' de la base de données.
+ *
+ * Colonnes correspondantes :
+ *   IDActivite          → $id
+ *   nomActivite         → $nomAct
+ *   descriptionActivite → $descAct
+ *   dateActivite        → $dateAct
+ *   prixActivite        → $prixAct
  */
+class Activite {
 
-class Activite{
-    /**
-     * @var int code de l'activité (clé primaire)
-     */
+    /** @var int Identifiant unique de l'activité (clé primaire, AUTO_INCREMENT) */
     private int $id;
 
-    /**
-     * @var string nom de l'activité 
-     */
-    private String $nomAct;
+    /** @var string Nom de l'activité */
+    private string $nomAct;
 
-    /**
-     * @var string description de l'activité 
-     */
-    private String $descAct;
+    /** @var string Description de l'activité */
+    private string $descAct;
 
-    /**
-     * @var string date de l'activité 
-     */
-    private String $dateAct;
+    /** @var string Date de l'activité (format Y-m-d) */
+    private string $dateAct;
 
-    /**
-     * @var float prix de l'activité 
-     */
+    /** @var float Prix de participation à l'activité (en euros) */
     private float $prixAct;
 
+    /** @var array Liste des congressistes inscrits à cette activité */
+    private array $CongressisteTab;
+
     /**
-     * @var array tableau de congressiste
+     * Constructeur de l'entité Activite.
+     *
+     * @param int    $id       Identifiant (0 pour une nouvelle entité non encore persistée)
+     * @param string $nomAct   Nom de l'activité
+     * @param string $descAct  Description de l'activité
+     * @param string $dateAct  Date de l'activité
+     * @param float  $prixAct  Prix de l'activité
      */
-
-        private array $CongressisteTab;
-
-
-    public function __construct(int $id, string $nomAct, string $descAct, string $dateAct, float $prixAct){
-        $this->id = $id;
-        $this->nomAct = $nomAct;
+    public function __construct(int $id, string $nomAct, string $descAct, string $dateAct, float $prixAct) {
+        $this->id      = $id;
+        $this->nomAct  = $nomAct;
         $this->descAct = $descAct;
         $this->dateAct = $dateAct;
         $this->prixAct = $prixAct;
-        //$this->CongressisteTab = $CongressisteTab;
     }
 
-    /**
-     * getter pour le code de l'activité
-     */
+    /** @return int Identifiant de l'activité */
+    public function getId(): int { return $this->id; }
 
-    public function getId():int{
-        return $this->id;
-    }
-    
-    /**
-     * setter pour le code de l'activité
-     */
-    public function setId(int $id):void{
-        $this->id = $id;
-    }
+    /** @param int $id Nouvel identifiant */
+    public function setId(int $id): void { $this->id = $id; }
 
-    /**
-     * getter pour le nom de l'activité
-     */
+    /** @return string Nom de l'activité */
+    public function getNom(): string { return $this->nomAct; }
 
-    public function getNom():string{
-        return $this->nomAct;
-    }
-    
-    /**
-     * setter pour le nom de l'activité
-     */
-    public function setNom(string $nomAct):void{
-        $this->nomAct = $nomAct;
-    }
+    /** @param string $nomAct Nouveau nom */
+    public function setNom(string $nomAct): void { $this->nomAct = $nomAct; }
 
-    /**
-     * getter pour la description de l'activité
-     */
+    /** @return string Description de l'activité */
+    public function getDesc(): string { return $this->descAct; }
 
-    public function getDesc():string{
-        return $this->descAct;
-    }
-    
-    /**
-     * setter pour la description de l'activité
-     */
-    public function setDesc(string $descAct):void{
-        $this->descAct = $descAct;
-    }
+    /** @param string $descAct Nouvelle description */
+    public function setDesc(string $descAct): void { $this->descAct = $descAct; }
+
+    /** @return string Date de l'activité */
+    public function getDate(): string { return $this->dateAct; }
+
+    /** @param string $dateAct Nouvelle date */
+    public function setDate(string $dateAct): void { $this->dateAct = $dateAct; }
+
+    /** @return float Prix de l'activité */
+    public function getPrix(): float { return $this->prixAct; }
+
+    /** @param float $prixAct Nouveau prix */
+    public function setPrix(float $prixAct): void { $this->prixAct = $prixAct; }
+
+    /** @return array Tableau des congressistes inscrits */
+    public function getCongressiste(): array { return $this->CongressisteTab; }
+
+    /** @param array $CongressisteTab Nouveau tableau de congressistes */
+    public function setCongressiste(array $CongressisteTab): void { $this->CongressisteTab = $CongressisteTab; }
 
     /**
-     * getter pour la date de l'activité
+     * Ajoute un congressiste à la liste des inscrits de cette activité.
+     *
+     * @param Congressiste $congressiste Le congressiste à ajouter
      */
-
-    public function getDate():string{
-        return $this->dateAct;
-    }
-    
-    /**
-     * setter pour le code de l'activité
-     */
-    public function setDate(string $dateAct):void{
-        $this->dateAct = $dateAct;
-    }
-
-    /**
-     * getter pour le prix de l'activité
-     */
-
-    public function getPrix():float{
-        return $this->prixAct;
-    }
-    
-    /**
-     * setter pour le code de l'activité
-     */
-    public function setPrix(float $prixAct):void{
-        $this->prixAct = $prixAct;
-    }
-
-    /**
-     * getter pour le tableau de congressiste
-     */
-
-    public function getCongressiste():array{
-        return $this->CongressisteTab;
-    }
-
-    /**
-     * setter pour remplir le tableau de congressiste
-     */
-
-    public function setCongressiste(array $CongressisteTab):void{
-        $this->CongressisteTab = $CongressisteTab;
-    }
-
-    /**
-     * Ajouter un congressiste à la promotion
-     * 
-     * @param Congressiste $etudiant
-     * @return void
-     */
-    public function ajouterCongressiste(Congressiste $congressiste): void
-    {
+    public function ajouterCongressiste(Congressiste $congressiste): void {
         $this->CongressisteTab[] = $congressiste;
-        // S'assurer que le congressite a cette activté comme référence
         $congressiste->setCongressiste($this);
     }
 
     /**
-     * Supprimer un congressiste à la promotion
-     * 
-     * @param Congressiste $etudiant
-     * @return void
+     * Retire un congressiste de la liste des inscrits de cette activité.
+     *
+     * @param Congressiste $etudiant Le congressiste à retirer
      */
-    public function supprimerCongressiste(Congressiste $etudiant): void
-    {
+    public function supprimerCongressiste(Congressiste $etudiant): void {
         $key = array_search($etudiant, $this->etudiants, true);
-        if($key !== false){
+        if ($key !== false) {
             unset($this->etudiants[$key]);
-            $this->etudiants = array_values($this->etudiants); //Réindexer le tableau
-        }       
+            $this->etudiants = array_values($this->etudiants);
+        }
     }
-
 }
 ?>

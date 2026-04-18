@@ -1,6 +1,20 @@
 <?php
-// app/scripts/hash_passwords_simple.php
-// Usage CLI recommandé : php app/scripts/hash_passwords_simple.php
+/**
+ * Script utilitaire — Hachage des mots de passe en base de données
+ *
+ * Ce script est destiné à être exécuté UNE SEULE FOIS en ligne de commande
+ * pour migrer les mots de passe stockés en clair vers un format sécurisé bcrypt.
+ *
+ * Usage recommandé (CLI uniquement, ne pas exposer via le navigateur) :
+ *   php app/models/script.php
+ *
+ * Comportement :
+ *   - Parcourt tous les congressistes de la table 'congressiste_b'
+ *   - Si le mot de passe est déjà haché (commence par $2y$ ou $2b$), il est ignoré
+ *   - Sinon, il est haché avec PASSWORD_BCRYPT et mis à jour en base
+ *
+ * Affiche un résumé final : nombre total traité, hachés, ignorés.
+ */
 
 $DB_HOST = 'localhost';
 $DB_NAME = 'congresanalim';
@@ -23,25 +37,25 @@ echo "Début du hachage des mots de passe (" . date('Y-m-d H:i:s') . ")" . PHP_E
 $stmt = $pdo->query("SELECT IDCongressiste, mdp FROM congressiste_b");
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$countTotal = 0;
-$countHashed = 0;
+$countTotal   = 0;
+$countHashed  = 0;
 $countSkipped = 0;
 
 foreach ($rows as $row) {
     $countTotal++;
-    $id = (int)$row['IDCongressiste'];
-    $mdp = (string)$row['mdp'];
+    $id  = (int) $row['IDCongressiste'];
+    $mdp = (string) $row['mdp'];
 
-    // Si déjà un hash bcrypt (commence par $2y$ ou $2b$), on skip
+    // Détection d'un hash bcrypt existant — on ne re-hache pas
     if (strpos($mdp, '$2y$') === 0 || strpos($mdp, '$2b$') === 0) {
         echo "[#{$id}] Déjà haché -> ignoré." . PHP_EOL;
         $countSkipped++;
         continue;
     }
 
-    // Hache le mot de passe clair et met à jour
+    // Hachage du mot de passe en clair et mise à jour en base
     $hash = password_hash($mdp, PASSWORD_BCRYPT);
-    $upd = $pdo->prepare("UPDATE congressiste_b SET mdp = :mdp WHERE IDCongressiste = :id");
+    $upd  = $pdo->prepare("UPDATE congressiste_b SET mdp = :mdp WHERE IDCongressiste = :id");
     $upd->execute([':mdp' => $hash, ':id' => $id]);
 
     echo "[#{$id}] Mot de passe haché." . PHP_EOL;

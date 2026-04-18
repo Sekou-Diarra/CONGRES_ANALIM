@@ -1,164 +1,100 @@
 <?php
 /**
- * Classe représentant une activité
- * Mappée sur la table 'Activite' de la base de données
+ * Entité Congressiste
+ *
+ * Représente un participant (ou l'organisateur) du congrès.
+ * Mappée sur la table 'congressiste_b' de la base de données.
+ *
+ * Colonnes correspondantes :
+ *   IDCongressiste       → $id
+ *   nomCongressiste      → $nomCong
+ *   prenomCongressiste   → $prenomCong
+ *   adresseCongressiste  → $adrCong
+ *   dateInscription      → $dateICong
+ *   mailCongressiste     → $mailCong
+ *   mdp                  → $password
  */
+class Congressiste {
 
-class Congressiste{
-    /**
-     * @var int code de l'activité (clé primaire)
-     */
+    /** @var int Identifiant unique du congressiste (clé primaire, AUTO_INCREMENT) */
     private int $id;
 
-    /**
-     * @var string nom de l'activité 
-     */
-    private String $nomCong;
+    /** @var string Nom du congressiste */
+    private string $nomCong;
 
-    /**
-     * @var string prénom de l'activité 
-     */
-    private String $prenomCong;
+    /** @var string Prénom du congressiste */
+    private string $prenomCong;
 
-    /**
-     * @var string description de l'activité 
-     */
-    private String $adrCong;
+    /** @var string Adresse postale du congressiste */
+    private string $adrCong;
 
-    /**
-     * @var string date de l'activité 
-     */
-    private String $dateICong;
+    /** @var string Date d'inscription au congrès (format Y-m-d) */
+    private string $dateICong;
 
-    /**
-     * @var string prix de l'activité 
-     */
+    /** @var string Adresse email du congressiste (utilisée comme identifiant de connexion) */
     private string $mailCong;
 
-    /**
-     * @var string prix de l'activité 
-     */
+    /** @var string Mot de passe hashé (bcrypt via password_hash) */
     private string $password;
 
     /**
-     * @var array tableau d'activités
+     * Constructeur de l'entité Congressiste.
+     *
+     * @param int    $id          Identifiant
+     * @param string $nomCong     Nom
+     * @param string $prenomCong  Prénom
+     * @param string $adrCong     Adresse postale
+     * @param string $dateICong   Date d'inscription
+     * @param string $mailCong    Email
+     * @param string $password    Mot de passe hashé
      */
-
-    //private array $ActiviteTab;
-
-    public function __construct(int $id, string $nomCong, string $prenomCong, string $adrCong, string $dateICong, string $mailCong, string $password){
-        $this->id = $id;
-        $this->nomCong = $nomCong;
+    public function __construct(int $id, string $nomCong, string $prenomCong, string $adrCong, string $dateICong, string $mailCong, string $password) {
+        $this->id         = $id;
+        $this->nomCong    = $nomCong;
         $this->prenomCong = $prenomCong;
-        $this->adrCong = $adrCong;
-        $this->dateICong = $dateICong;
-        $this->mailCong = $mailCong;
-        $this->password = $password;
-        //$this->ActiviteTab = $ActiviteTab;
+        $this->adrCong    = $adrCong;
+        $this->dateICong  = $dateICong;
+        $this->mailCong   = $mailCong;
+        $this->password   = $password;
     }
 
-    /**
-     * getter pour le code de l'activité
-     */
+    /** @return int Identifiant du congressiste */
+    public function getIdCong(): int { return $this->id; }
 
-    public function getIdCong():int{
-        return $this->id;
-    }
-    
-    /**
-     * setter pour le code de l'activité
-     */
-    public function setId(int $id):void{
-        $this->id = $id;
-    }
+    /** @param int $id Nouvel identifiant */
+    public function setId(int $id): void { $this->id = $id; }
 
-    /**
-     * getter pour le nom de l'activité
-     */
+    /** @return string Nom du congressiste */
+    public function getNomCong(): string { return $this->nomCong; }
 
-    public function getNomCong():string{
-        return $this->nomCong;
-    }
-    
-    /**
-     * setter pour le nom de l'activité
-     */
-    public function setNomCong(string $nomCong):void{
-        $this->nomCong = $nomCong;
-    }
+    /** @param string $nomCong Nouveau nom */
+    public function setNomCong(string $nomCong): void { $this->nomCong = $nomCong; }
 
-    /**
-     * getter pour le nom de l'activité
-     */
+    /** @return string Prénom du congressiste */
+    public function getPrenomCong(): string { return $this->prenomCong; }
 
-    public function getPrenomCong():string{
-        return $this->prenomCong;
-    }
-    
-    /**
-     * setter pour le nom de l'activité
-     */
-    public function setPrenomCong(string $prenomCong):void{
-        $this->prenomCong = $prenomCong;
-    }
+    /** @param string $prenomCong Nouveau prénom */
+    public function setPrenomCong(string $prenomCong): void { $this->prenomCong = $prenomCong; }
 
-    /**
-     * getter pour l'adresse du congressiste
-     */
+    /** @return string Adresse postale */
+    public function getAdr(): string { return $this->adrCong; }
 
-    public function getAdr():string{
-        return $this->adrCong;
-    }
-    
-    /**
-     * setter pour la description de l'activité
-     */
-    public function setAdr(string $adrCong):void{
-        $this->adrCong = $adrCong;
-    }
+    /** @param string $adrCong Nouvelle adresse */
+    public function setAdr(string $adrCong): void { $this->adrCong = $adrCong; }
 
-    /**
-     * getter pour la date de l'activité
-     */
+    /** @return string Date d'inscription */
+    public function getDateI(): string { return $this->dateICong; }
 
-    public function getDateI():string{
-        return $this->dateICong;
-    }
-    
-    /**
-     * setter pour le code de l'activité
-     */
-    public function setDateI(string $dateICong):void{
-        $this->dateICong = $dateICong;
-    }
+    /** @param string $dateICong Nouvelle date d'inscription */
+    public function setDateI(string $dateICong): void { $this->dateICong = $dateICong; }
 
-    /**
-     * getter pour le prix de l'activité
-     */
+    /** @return string Email du congressiste */
+    public function getMail(): string { return $this->mailCong; }
 
-    public function getMail():string{
-        return $this->mailCong;
-    }
-    
-    /**
-     * setter pour le code de l'activité
-     */
-    public function setMail(string $mailCong):void{
-        $this->mailCong = $mailCong;
-    }
+    /** @param string $mailCong Nouvel email */
+    public function setMail(string $mailCong): void { $this->mailCong = $mailCong; }
 
-    public function getPassword():string{
-        return $this->password;
-    }
-/*
-    public function getActivite():array{
-        return $this->ActiviteTab;
-    }
-
-    public function setActivite(array $ActiviteTab):void{
-        $this->ActiviteTab = $ActiviteTab;
-    }
-        */
-
+    /** @return string Mot de passe hashé */
+    public function getPassword(): string { return $this->password; }
 }
 ?>

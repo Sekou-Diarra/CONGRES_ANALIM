@@ -1,11 +1,26 @@
 <?php
-if(!empty($error)){
-    echo "<p class='alert alert-error'>" . htmlspecialchars($error) . "</p>";
-}
-if(!empty($success)){
-    echo "<p class='alert alert-success'>" . htmlspecialchars($success) . "</p>";
-}
+/**
+ * Vue register.php — Formulaire d'inscription
+ *
+ * Affiche le formulaire de création de compte congressiste.
+ * Les messages d'erreur ou de succès transmis par AuthController::register()
+ * sont affichés en haut du formulaire.
+ *
+ * Variables attendues :
+ *   $error   (string|null) — Message d'erreur (champs invalides, email déjà utilisé)
+ *   $success (string|null) — Message de succès (non utilisé ici, géré via flash)
+ *
+ * Soumission : POST vers index.php?c=auth&a=register
+ * Contraintes : mot de passe minimum 6 caractères, email valide
+ */
 ?>
+
+<?php if (!empty($error)): ?>
+    <p class='alert alert-error'><?= htmlspecialchars($error) ?></p>
+<?php endif; ?>
+<?php if (!empty($success)): ?>
+    <p class='alert alert-success'><?= htmlspecialchars($success) ?></p>
+<?php endif; ?>
 
 <h2>Créer un compte</h2>
 <form action="" method="POST">

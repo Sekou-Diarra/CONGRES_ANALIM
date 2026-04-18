@@ -1,3 +1,15 @@
+<?php
+/**
+ * Vue activite/add.php — Formulaire d'ajout d'une activité
+ *
+ * Affiche le formulaire permettant à l'organisateur (admin) d'ajouter
+ * une nouvelle activité au programme du congrès.
+ * Accessible uniquement à l'administrateur (IDCongressiste = 1).
+ *
+ * Soumission : POST vers index.php?c=activite&a=add
+ * Champs requis : nom, description, date, prix (>= 0)
+ */
+?>
 <h2>Ajouter une activité</h2>
 <form action="index.php?c=activite&a=add" method="POST">
     <label for="nom">Nom de l'activité :</label>
